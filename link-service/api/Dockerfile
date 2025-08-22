@@ -31,11 +31,11 @@ COPY --from=composer:2.7.7 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # Переносим composer.json и устанавливаем зависимости
-COPY composer.json composer.json
+COPY ../composer.json composer.json
 RUN composer install --optimize-autoloader
 
 # Копируем код
-COPY . .
+COPY .. .
 
 # Права
 RUN chown -R www-data:www-data /var/www
