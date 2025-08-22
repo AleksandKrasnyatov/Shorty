@@ -61,6 +61,8 @@ $config = [
             'enableStrictParsing' => false,
             'rules' => [
                 '' => 'link/health',
+                'shorten' => 'link/shorten',
+                's/<code:[a-zA-Z0-9]{1,8}>' => 'link/redirect',
             ],
         ],
     ],
