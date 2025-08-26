@@ -32,6 +32,7 @@ class LinkController extends Controller
 
     /**
      * POST /shorten
+     *
      * @throws Exception
      */
     public function actionShorten(): array
@@ -60,6 +61,7 @@ class LinkController extends Controller
 
     /**
      * GET /s/<code>
+     *
      * @throws NotFoundHttpException
      */
     public function actionRedirect(string $code): Response

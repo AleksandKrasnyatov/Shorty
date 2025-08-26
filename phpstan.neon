@@ -1,0 +1,9 @@
+parameters:
+  level: 5
+  paths:
+    - link-service/api/controllers
+    - link-service/api/models
+  excludePaths:
+    - /**/tests/*
+    - /**/vendor/*
+  checkMissingIterableValueType: false

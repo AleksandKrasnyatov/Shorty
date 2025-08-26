@@ -14,10 +14,13 @@ TEST_CONTAINER    = link-service
 COMPOSE_FILE      = docker-compose.yml
 
 # Команды
-YII       = php yii
-COMPOSER  = composer
-CODECEPT  = vendor/bin/codecept
-PHPSTAN   = vendor/bin/phpstan
+YII      = php yii
+COMPOSER = composer
+CODECEPT = vendor/bin/codecept
+PHPSTAN  = vendor/bin/phpstan
+PHPCS    = vendor/bin/phpcs
+PHPCBF   = vendor/bin/phpcbf
+PSALM    = vendor/bin/psalm
 
 # Помощь
 .PHONY: help
@@ -84,7 +87,23 @@ build-tester: ## Пересобрать FunctionalTester
 # Качество кода
 .PHONY: phpstan
 phpstan: ## Запустить PHPStan
-	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PHPSTAN) analyse src --level=8
+	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PHPSTAN) analyse $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: phpcs
+phpcs: ## php _CodeSniffer
+	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PHPCS) $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: phpcbf
+phpcbf: ## Исправить стиль кода автоматически
+	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PHPCBF) $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: psalm
+psalm: ## Psalm
+	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PSALM) $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: psalm-fix
+psalm-fix: ## Psalm auto fix
+	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PSALM) --alter --issues=InvalidReturnType --dry-run
 
 # Shell
 .PHONY: shell
