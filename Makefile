@@ -97,6 +97,10 @@ phpcs: ## php _CodeSniffer
 phpcbf: ## Исправить стиль кода автоматически
 	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PHPCBF) $(filter-out $@,$(MAKECMDGOALS))
 
+.PHONY: psalm-init
+psalm-init: ## Psalm
+	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PSALM) --init
+
 .PHONY: psalm
 psalm: ## Psalm
 	docker-compose -f $(COMPOSE_FILE) exec $(SERVICE_CONTAINER) $(PSALM) $(filter-out $@,$(MAKECMDGOALS))

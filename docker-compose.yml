@@ -81,9 +81,6 @@ services:
       COMPOSER_ALLOW_SUPERUSER: 1
     volumes:
       - ./link-service/api:/var/www:cached
-      - ./phpstan.neon:/var/www/phpstan.neon
-      - ./phpcs.xml:/var/www/phpcs.xml
-      - ./psalm.xml:/var/www/psalm.xml
     depends_on:
       postgres:
         condition: service_healthy
